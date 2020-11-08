@@ -8,6 +8,7 @@ import 'nprogress/nprogress.css';
 
 import settings from '@/configs/settings.js';
 
+// 路由进度条动画
 NProgress.configure({ showSpinner: false });
 
 const originalPush = Router.prototype.push;

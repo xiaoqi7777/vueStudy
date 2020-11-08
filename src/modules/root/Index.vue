@@ -1,6 +1,6 @@
 <template>
   <div>
-    root==>{{test}}=>{{t}}
+    store测试==>{{test}}=>{{t}}
     <br/>
     <button @click="btn1"> 测试+ </button>
     <button @click="btn2"> 测试- </button>
@@ -36,9 +36,7 @@
         this.del(1)
       }
     },
-    mounted(){
-      console.log('=',this.$store)
-    }
+
   }
 </script>
 

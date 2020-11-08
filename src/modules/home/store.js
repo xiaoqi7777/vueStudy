@@ -1,7 +1,5 @@
 
 
-
-
 const store = {
   namespaced:true,
   state: {
@@ -9,19 +7,22 @@ const store = {
   },
   mutations: {
     increment (state,data) {
-      console.log('222222')
       // 变更状态
       state.count = state.count+data
+    },
+    del(state,data){
+      state.count = state.count-data
     }
   },
   actions: {
     increment (context,data) {
-      console.log('123',data)
       context.commit('increment',data)
     }
   },
   getters: {
-    test:()=>()=>11111
+    test:(state)=>{
+      return state.count
+    }
   }
 }
 export default store

@@ -10,20 +10,20 @@ let entryName = settings.entry;
 if (!entryName) {
     throw new Error('settings必须要有entry配置');
 }
-console.log('==============>',routeRequires.keys())
 routeRequires.keys().forEach((item) => {
     let nameExec = /\.\/([a-zA-Z0-9$_-]+)\/([^/]*).vue$/.exec(item);
     if (nameExec && nameExec.length >= 2) {
-        let routeName = (nameExec[1]);
-        console.log('routeName',routeName,nameExec[2],entryName)
+        let routeName = dynamicRoute((nameExec[1]));
         if (routeName === entryName && nameExec[2] === 'Index') {
-            rootRoutes.push({
+            rootRoutes.push(
+            {
                 path: '/',
                 name: 'entry',
                 component: routeRequires(item).default,
-            });
+            }
+            );
         } else {
-            let namePath = nameExec[2] === 'Index' ? '' : nameExec[2]
+            let namePath = nameExec[2] === 'Index' ? '' : dynamicRoute(nameExec[2])
             rootRoutes.push({
                 path: `/${routeName}${namePath ? '/' : ''}${namePath}`,
                 name: `${routeName}${namePath ? '-' : ''}${namePath}`,
@@ -39,9 +39,17 @@ routeRequires.keys().forEach((item) => {
     }
 });
 
-console.log('rootRoutes',rootRoutes)
+// console.log('rootRoutes',rootRoutes)
 
 export default [
     ...rootRoutes
 ];
 
+function dynamicRoute(data){
+    let rs = /^\$.+/.test(data)
+    if(rs){
+        return data.replace(/\$/g,()=>':')
+    }else{
+        return data
+    }
+}

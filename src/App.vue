@@ -1,8 +1,14 @@
 <template>
   <div id="app">
+    dome 1=>
     <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+    <div class="router">
+      <router-view></router-view>
+    </div>
     <br/>
-    路由显示
+    dome 2=>
+    路由 测试
     <br/>
     <router-link to='/'>首页</router-link>
     <br/>
@@ -10,7 +16,15 @@
     <br/>
     <router-link to='/label'>label</router-link>
     <br/>
-    <router-view></router-view>
+    <br/>
+    dome 3=>
+    form 校验自定义rule
+    <router-link to='/form'>form</router-link>
+    
+    <br/>
+    <br/>
+    dome 4=>
+    <router-link to='/xlsx'>xlsx</router-link>
   </div>
 </template>
 
@@ -26,12 +40,9 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.router{
+  position: absolute;
+  left: 500px;
+  top: 100px;
 }
 </style>

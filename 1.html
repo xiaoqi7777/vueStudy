@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="file" onchange="handleChange(event)">
+  <button onclick="download()">下载</button>
+  <button onclick="upload()">上传</button>
+  <script>
+  let bytes = null;
+  function download(){
+    let data = atob(`R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7`)
+    //1、创建一个 数组(Buffer)
+    let b = new ArrayBuffer(data.length)
+    //2、创建 Uint8Array
+    let arr = new Uint8Array(b)
+
+    for(let i=0;i<data.length;i++){
+      arr[i] = data.charCodeAt(i)
+    }
+    // 创建流
+    let blob = new Blob([arr],{type:'image/gif'})
+
+    let a = document.createElement('a')
+      a.download = 'user.gif'//下载名
+      a.rel = 'noopener'
+      // a.href = blob;
+      a.href = URL.createObjectURL(blob)
+      a.dispatchEvent(new MouseEvent('click'));
+      URL.revokeObjectURL(blob);//销毁objectURL 也会销毁Blob
+  }
+  function upload(){
+    let data = bytes
+    //1、创建一个 数组(Buffer)
+    let b = new ArrayBuffer(data.length)
+    //2、创建 Uint8Array
+    let arr = new Uint8Array(b)
+
+    for(let i=0;i<data.length;i++){
+      arr[i] = data.charCodeAt(i)
+    }
+    // 创建流
+    let blob = new Blob([arr],{type:'image/png'})
+
+    let xhr = new XMLHttpRequest()
+    let formData = new FormData();
+    formData.append('avatar',blob)
+    xhr.open('POST','http://localhost:4000/upload',true);
+    xhr.send(formData);
+  }
+
+    function handleChange(e){
+      // file 文件流
+      let file = e.target.files[0];
+      // FileReader 读取流
+      let fileReader = new FileReader()
+        fileReader.onload = e =>{
+          // atob 是一个全局方法
+          // base64 必须要转换成 字符数 
+          // console.log(e.target.result)
+          // data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/4RDkR
+           bytes = atob(e.target.result.split(',')[1])
+        }
+        fileReader.readAsDataURL(file)
+    }
+  </script>
+</body>
+</html>

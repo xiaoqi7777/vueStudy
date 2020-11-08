@@ -11,8 +11,8 @@ import Vue from "vue";
 // moment.locale("zh-cn");
 
 Vue.config.devtools = process.env.NODE_ENV === "development";
-
 const globalRequires = require.context("@/global", true, /\.\/([a-zA-Z0-9$_-]+)\/(.*)(\.js|\.vue)$/);
+// console.log('===>',globalRequires.keys())
 globalRequires.keys().forEach((item) => {
     const nameExec = /\.\/([a-zA-Z0-9$_-]+)\/(.*)(\.js|\.vue)$/.exec(item);
     if (nameExec && nameExec.length >= 2) {

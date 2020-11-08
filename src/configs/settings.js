@@ -1,3 +1,3 @@
 export default {
-  entry:'root'
+  entry:'table'
 }
